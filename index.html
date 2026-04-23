@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Quiz Set</title>
+<style>
+body { font-family: Arial; padding: 20px; }
+.question { margin-bottom: 20px; }
+.option { display: block; margin: 5px 0; cursor: pointer; }
+.correct { color: green; }
+.wrong { color: red; }
+</style>
+</head>
+<body>
+
+<h2>Interactive Quiz</h2>
+
+<div id="quiz"></div>
+<br>
+<button onclick="submitQuiz()">Submit Quiz</button>
+<h3 id="score"></h3>
+
+<script>
+const quizData = [
+{
+q: "1. The “India Digital Payments Report – Year 2025 in Review” released by Worldline SA highlighted the performance of Unified Payments Interface (UPI). Which of the following best describes the total number of transactions processed by UPI in 2025?",
+options: ["A. 172.2 billion with a 15% growth rate","B. 228.5 billion with a 33% year-on-year increase","C. 299.74 billion with a 9% decline","D. 143.82 billion with a 34% increase"],
+answer: 1
+},
+{
+q: "2. According to the Worldline report on India’s digital payments ecosystem, what was the total transaction value processed through UPI in 2025?",
+options: ["A. ₹172.2 trillion","B. ₹228.5 trillion","C. ₹299.74 trillion","D. ₹143.82 trillion"],
+answer: 2
+},
+{
+q: "3. The growth of Person-to-Merchant (P2M) transactions under UPI was a key highlight of the Worldline report. Which of the following correctly represents this trend?",
+options: ["A. Declined by 9% to 143.82 billion","B. Increased by 34% to 143.82 billion","C. Increased by 15% to 731.38 million","D. Remained constant at 172.2 billion"],
+answer: 1
+},
+{
+q: "4. Expansion of merchant infrastructure under UPI was reflected in the growth of QR codes. What was the approximate number of UPI QR codes reported in 2025?",
+options: ["A. 299.74 million","B. 731.38 million","C. 143.82 million","D. 172.2 million"],
+answer: 1
+},
+{
+q: "5. The Worldline report also pointed out a change in the Average Ticket Size (ATS) of UPI transactions. Which statement correctly reflects this trend?",
+options: ["A. ATS increased by 15%","B. ATS decreased by 9%","C. ATS remained unchanged","D. ATS doubled compared to 2024"],
+answer: 1
+},
+{
+q: "6. Visa, in collaboration with HDFC Bank Limited, launched a themed credit card linked to a global sporting event. What is the name of this card?",
+options: ["A. FIFA Platinum Rewards Card","B. World Cup Elite Card","C. FIFA World Cup 2026 Pixel Credit Card","D. Global Sports Cashback Card"],
+answer: 2
+},
+{
+q: "7. The FIFA World Cup 2026 Pixel Credit Card introduced by Visa and HDFC Bank is associated with which campaign?",
+options: ["A. Play & Earn","B. Spend & Win","C. Swipe & Save","D. Score & Redeem"],
+answer: 1
+},
+{
+q: "8. The FIFA World Cup 2026 Pixel Credit Card is made available through which digital platform of HDFC Bank?",
+options: ["A. Paytm Wallet","B. BHIM App","C. PayZapp Application","D. Google Pay"],
+answer: 2
+},
+{
+q: "9. The Parliament of Iraq elected Nizar Mohammed Saeed Amedi as the new President. Which of the following statements correctly describes this development?",
+options: ["A. He became the 10th President since 1990","B. He succeeded Saddam Hussein","C. He became the 9th President and 6th Head of State since 2003","D. He replaced the Prime Minister"],
+answer: 2
+},
+{
+q: "10. Nizar Mohammed Saeed Amedi succeeded which of the following as the President of Iraq?",
+options: ["A. Barham Salih","B. Abdul Latif Rashid","C. Mustafa Al-Kadhimi","D. Haider al-Abadi"],
+answer: 1
+},
+{
+q: "11. A new species of bent-toed gecko named ‘Cyrtodactylus raimonaensis’ was discovered in India. Where exactly was this species found?",
+options: ["A. Kaziranga National Park","B. Raimona National Park region in Assam","C. Silent Valley National Park","D. Sundarbans Biosphere Reserve"],
+answer: 1
+},
+{
+q: "12. The newly discovered gecko species ‘Cyrtodactylus raimonaensis’ belongs to which genus?",
+options: ["A. Hemidactylus","B. Geckoella","C. Cyrtodactylus","D. Calodactylodes"],
+answer: 2
+},
+{
+q: "13. The discovery of ‘Cyrtodactylus raimonaensis’ was documented in which scientific publication?",
+options: ["A. Nature","B. Science","C. Zootaxa","D. Current Science"],
+answer: 2
+},
+{
+q: "14. The 43rd edition of the Badminton Asia Championships 2026 was held in Ningbo, China. Which country topped the medal tally?",
+options: ["A. China","B. Japan","C. South Korea","D. Thailand"],
+answer: 2
+},
+{
+q: "15. In the Badminton Asia Championships 2026, India’s Ayush Shetty achieved a historic milestone. Which of the following correctly describes his achievement?",
+options: ["A. Won gold in men’s doubles","B. Became first Indian to win gold in 30 years","C. Secured silver in men’s singles and reached final after 61 years","D. Won bronze in mixed doubles"],
+answer: 2
+},
+{
+q: "16. The International Day of Human Space Flight is observed annually on April 12. What is its primary significance?",
+options: ["A. Marks first satellite launch","B. Celebrates moon landing","C. Commemorates first human spaceflight by Yuri Gagarin","D. Honors International Space Station"],
+answer: 2
+},
+{
+q: "17. The International Day for Street Children (IDSC), observed on April 12, was first launched by which organization?",
+options: ["A. UNICEF","B. UNESCO","C. Consortium for Street Children (CSC)","D. Save the Children"],
+answer: 2
+},
+{
+q: "18. The theme for International Day for Street Children 2026 is:",
+options: ["A. Every Child Matters","B. Protect, not Punish","C. Street to School","D. End Child Poverty"],
+answer: 1
+},
+{
+q: "19. Vietnam’s Vingroup signed an MoU with the Government of Maharashtra involving multi-sector investments. What is the total proposed investment amount?",
+options: ["A. USD 5 billion","B. USD 6.5 billion","C. USD 7.5 billion","D. USD 10 billion"],
+answer: 1
+},
+{
+q: "20. Under the MoU between Vingroup and the Government of Maharashtra, which sector received an allocation of USD 1.5 billion?",
+options: ["A. Smart city development","B. Renewable energy","C. Electric mobility (Green and Smart Mobility)","D. Agricultural infrastructure"],
+answer: 2
+}
+];
+
+const quizDiv = document.getElementById("quiz");
+
+quizData.forEach((item, index) => {
+let qDiv = document.createElement("div");
+qDiv.classList.add("question");
+
+let qTitle = document.createElement("p");
+qTitle.innerText = item.q;
+qDiv.appendChild(qTitle);
+
+item.options.forEach((opt, i) => {
+let btn = document.createElement("button");
+btn.innerText = opt;
+btn.classList.add("option");
+
+btn.onclick = function () {
+if (btn.classList.contains("answered")) return;
+
+if (i === item.answer) {
+btn.classList.add("correct");
+btn.innerText += " ✔ Correct";
+} else {
+btn.classList.add("wrong");
+btn.innerText += " ✘ Wrong";
+let correct = document.createElement("div");
+correct.innerHTML = "<span class='correct'>Correct Answer: " + item.options[item.answer] + "</span>";
+qDiv.appendChild(correct);
+}
+
+Array.from(qDiv.querySelectorAll("button")).forEach(b => b.classList.add("answered"));
+};
+
+qDiv.appendChild(btn);
+});
+
+quizDiv.appendChild(qDiv);
+});
+
+function submitQuiz() {
+let correct = document.querySelectorAll(".correct").length;
+document.getElementById("score").innerText = "Your Score: " + correct + " / " + quizData.length;
+}
+</script>
+
+</body>
+</html>
